@@ -33,7 +33,7 @@ const MainNav = props => {
                 <span />
             </button>
             <h1 className='main-navigation__title'>
-                <Link to='/'>YourGames</Link>
+                <Link to='/'>GameRater</Link>
             </h1>
             <nav className='main-navigation__header-nav'>
                 <Links />
