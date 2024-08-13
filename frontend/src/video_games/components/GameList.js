@@ -23,6 +23,7 @@ const GameList = props => {
                         id = {game.id}
                         image = {game.imageUrl}
                         title = {game.title}
+                        defaultRating = {game.defaultRating}
                     />
                 ))}
             </ul>
