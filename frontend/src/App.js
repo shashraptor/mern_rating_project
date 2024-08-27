@@ -15,10 +15,10 @@ const App = () => {
           <Route path="/" exact>
             <Users />
           </Route>
-          <Route path="/:userId/games" exact>
+          <Route path="/:userId/ratings" exact>
             <UserGames/>
           </Route>
-          <Route path="/games/new" exact>
+          <Route path="/ratings/new" exact>
             <NewGame />
           </Route>
           <Redirect to="/"/>
