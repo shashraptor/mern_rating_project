@@ -1,3 +1,6 @@
+const { v4 : uuidv4 } = require('uuid');
+const HttpError = require("../models/http-error");
+
 const dummy_ratings = [
     
 ]
@@ -7,6 +10,7 @@ const rateGameByID = (req, res, next) => {
     const { rating, review } = req.body;
     
     const createdRating = {
+        ratingID: uuidv4(),
         gameID,
         rating,
         review
@@ -16,7 +20,7 @@ const rateGameByID = (req, res, next) => {
     dummy_ratings.push(createdRating);
     
     res.status(201).json({
-        message: `Rating of ${rating} added for game ${gameID}`,
+        message: `Rating number ${createdRating.ratingID} of ${rating} stars added for game ${gameID}`,
         review: review
     });
 };
@@ -27,9 +31,9 @@ const updateRating = (req, res, next) => {
     
     const rating_index = dummy_ratings.findIndex(r => r.gameID === gameID);
     if (rating_index === -1) {
-        return res.status(404).json({
-            message: `Rating for game ${gameID} not found`
-        });
+        return next(new HttpError(
+            'Rating for this game not found', 404
+        ));
     }
 
     const updated_rating = { ...dummy_ratings.find(r => r.gameID === gameID)};
@@ -45,5 +49,22 @@ const updateRating = (req, res, next) => {
 
 };
 
+const getRatingsByGameID = (req, res, next) => {
+    const gameID = req.params.gameID;
+
+    const all_ratings = dummy_ratings.filter(r => r.gameID === gameID);
+
+    if (all_ratings.length === 0) {
+        return next(new HttpError(
+            'No ratings exist for this game', 404
+        ));
+    }
+
+    res.status(200).json({
+        ratings: all_ratings
+    });
+};
+
 exports.rateGameByID = rateGameByID;
 exports.updateRating = updateRating;
+exports.getRatingsByGameID = getRatingsByGameID;

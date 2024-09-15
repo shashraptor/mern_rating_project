@@ -1,19 +1,18 @@
 const express = require('express');
+const { check } = require('express-validator');
+
 const router = express.Router();
 
-const usersControllers = require('../controllers/users');
+const usersController = require('../controllers/users');
 
 
-router.get('/', (req, res, next) => {
-    console.log("GET request in ratings");
-    res.json({message: 'it works!'});
-});
+router.get('/', usersController.getUsers);
 
-router.get('/:userID/ratings', usersControllers.userRatings);
+router.get('/:userID/ratings', usersController.userRatings);
 
-router.post('/register', usersControllers.registerUser);
+router.post('/register', usersController.registerUser);
 
-router.post('/login', usersControllers.loginUser);
+router.post('/login', usersController.loginUser);
 
 
 module.exports = router;

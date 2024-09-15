@@ -1,7 +1,10 @@
 const express = require('express');
+const { check } = require('express-validator');
+
 const router = express.Router();
 
-const gamesControllers = require('../controllers/games');
+
+const gamesController = require('../controllers/games');
 
 
 router.get('/', (req, res, next) => {
@@ -14,9 +17,11 @@ router.get('/', (req, res, next) => {
     
 });
 
-router.post('/:gameID/rate', gamesControllers.rateGameByID);
+router.post('/:gameID/rate', gamesController.rateGameByID);
 
-router.patch('/:gameID/rate', gamesControllers.updateRating);
+router.patch('/:gameID/rate', gamesController.updateRating);
+
+router.get('/:gameID/ratings', gamesController.getRatingsByGameID);
 
 
 module.exports = router;
